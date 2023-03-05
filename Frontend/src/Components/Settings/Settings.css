@@ -1,0 +1,16 @@
+@media screen and (max-width:1000px) {
+    .imgStyle{
+        width: 100%;
+    }
+    .formStyle{
+        justify-content: center;
+        display:flex
+    }
+}
+
+/* .modal-backdrop{
+    width:100% !important;
+} */
+.imgStyle{
+    object-fit: cover;
+}

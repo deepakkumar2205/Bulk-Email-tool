@@ -1,0 +1,169 @@
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import login from "../../assets/login.png";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { loginAxios } from "../../Services/axios";
+import { errorToast, toastSuccess } from "../../Services/tostify";
+import { ColorRing } from "react-loader-spinner";
+import Context from "../../Context/Context";
+
+const Login = () => {
+  const [showPass, setShowPass] = useState("password");
+  const [buttonStatus , setButtonStatus] = useState(true);
+  const navigate =useNavigate();
+  const contextData = useContext(Context);
+
+  //yup validation
+  const userValidationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Enter a valid email address")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .min(6, "Pasword must have atleast 6 characters")
+      .required("Password is required"),
+  });
+
+  const init = {
+    email: "",
+    password: "",
+  };
+  //formik
+  const { values, handleChange, errors, handleBlur, touched, handleSubmit } =
+    useFormik({
+      initialValues: init,
+      validationSchema: userValidationSchema,
+      onSubmit: (values) => {
+        setButtonStatus(false)
+        loginAxios(values)
+        .then((res)=>{
+        setButtonStatus(true)
+        console.log(res);
+        if(res.status === 200){
+          toastSuccess("Login Successfull")
+          localStorage.setItem("x-Auth-token",res.data.token)
+          localStorage.setItem("user",res.data._id)
+          contextData.setNavFlag(true)
+          navigate("/")
+        }
+        })
+        .catch((err)=>{
+          setButtonStatus(true)
+          if(err.response.status === 401){
+            errorToast("Invalid Credentials")
+          }
+        })
+      },
+    });
+
+
+  return (
+    <div
+      className="d-flex flex-wrap justify-content-center align-items-center "
+      style={{ height: "90vh" }}
+    >
+      <div
+        className="leftArea bg-black text-primary text-start   "
+        style={{ width: "300px", height: "380px" }}
+      >
+        <div>
+          <img
+            src={login}
+            alt=""
+            style={{ width: "300px", height: "380px", objectFit: "cover" }}
+          />
+        </div>
+      </div>
+      <div
+        className="leftArea align-items-center d-flex justify-conter-center"
+        style={{}}
+      >
+        <form className="text-start border p-3 " onSubmit={handleSubmit} >
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Email address
+            </label>
+            <input
+              type="email"
+              values={values.email}
+              name="email"
+              className={
+                errors.email && touched.email !== undefined
+                  ? "form-control is-invalid"
+                  : "form-control"
+              }
+              onChange={handleChange}
+              onBlur={handleBlur}
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+
+            />
+             <div id="emailHelp" className="invalid-feedback">
+              {errors.email}
+            </div>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword1" className="form-label">
+              Password
+            </label>
+            <input
+               type={showPass}
+               value={values.password}
+               name="password"
+               className={
+                 errors.password && touched.password !== undefined
+                   ? "form-control is-invalid"
+                   : "form-control"
+               }
+               onChange={handleChange}
+               onBlur={handleBlur}
+              id="exampleInputPassword1"
+              aria-describedby="confirmHelp"
+            />
+              <div id="confirmHelp" className="invalid-feedback">
+              {errors.password}
+            </div>
+          </div>
+          <div className="mb-3 form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="exampleCheck1"
+              onChange={()=>{
+                console.log(showPass === "password");
+                showPass ==="password"? setShowPass("text"):setShowPass("password")
+              }}
+            />
+            <label className="form-check-label" htmlFor="exampleCheck1">
+              Show Password
+            </label>
+          </div>
+          <button type="submit" className="btn btn-primary">
+            {
+              buttonStatus ? "Login" :
+              <ColorRing
+                  visible={true}
+                  height="25"
+                  width="40"
+                  ariaLabel="blocks-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="blocks-wrapper"
+                  colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+                />
+            }
+          </button>
+          <br />
+          <br />
+          <div><Link to="/password-reset">Forgot password?</Link></div>
+          <br />
+          <div>You Already have an Account? <Link to="/signup">Signup</Link></div>
+          
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

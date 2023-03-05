@@ -1,0 +1,10 @@
+.imageStyle{
+    height: 48px;
+    padding-bottom: 12px;
+    padding-right: 10px;
+}
+@media screen and (max-width: 576px) {
+    .App{
+        width: fit-content;
+    }
+}
