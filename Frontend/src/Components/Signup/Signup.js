@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
-import { Circles, ColorRing } from "react-loader-spinner";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { singUpAxios } from "../../Services/axios";
+import { ColorRingLoading } from "../../Services/loading";
 import { defaultToast, toastSuccess, toastWarn } from "../../Services/tostify";
 
 const Signup = () => {
@@ -174,15 +174,9 @@ const Signup = () => {
           </div>
 
           <button type="submit" className="btn btn-primary">
-            {buttonLoader ? "Create" : <ColorRing
-              visible={true}
-              height="25"
-              width="50"
-              ariaLabel="blocks-loading"
-              wrapperStyle={{}}
-              wrapperClass="blocks-wrapper"
-              colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-            />}
+            {buttonLoader ? "Create" :
+            <ColorRingLoading />
+            }
           </button>
           <br />
           <br />

@@ -1,12 +1,12 @@
+import { useFormik } from "formik";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import login from "../../assets/login.png";
 import * as yup from "yup";
-import { useFormik } from "formik";
-import { loginAxios } from "../../Services/axios";
-import { errorToast, toastSuccess } from "../../Services/tostify";
-import { ColorRing } from "react-loader-spinner";
+import login from "../../assets/login.png";
 import Context from "../../Context/Context";
+import { loginAxios } from "../../Services/axios";
+import { ColorRingLoading } from "../../Services/loading";
+import { errorToast, toastSuccess } from "../../Services/tostify";
 
 const Login = () => {
   const [showPass, setShowPass] = useState("password");
@@ -40,7 +40,6 @@ const Login = () => {
         loginAxios(values)
         .then((res)=>{
         setButtonStatus(true)
-        console.log(res);
         if(res.status === 200){
           toastSuccess("Login Successfull")
           localStorage.setItem("x-Auth-token",res.data.token)
@@ -132,7 +131,6 @@ const Login = () => {
               className="form-check-input"
               id="exampleCheck1"
               onChange={()=>{
-                console.log(showPass === "password");
                 showPass ==="password"? setShowPass("text"):setShowPass("password")
               }}
             />
@@ -143,15 +141,7 @@ const Login = () => {
           <button type="submit" className="btn btn-primary">
             {
               buttonStatus ? "Login" :
-              <ColorRing
-                  visible={true}
-                  height="25"
-                  width="40"
-                  ariaLabel="blocks-loading"
-                  wrapperStyle={{}}
-                  wrapperClass="blocks-wrapper"
-                  colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-                />
+             <ColorRingLoading />
             }
           </button>
           <br />

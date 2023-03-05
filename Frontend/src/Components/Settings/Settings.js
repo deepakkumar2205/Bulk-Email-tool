@@ -5,8 +5,9 @@ import Modalcomp from './ModalComp.js'
 import { AiFillEye , AiFillEyeInvisible  } from 'react-icons/ai'
 import './Settings.css'
 import { getCredential, settingsAxios } from '../../Services/axios';
-import { toastSuccess, toastWarn } from '../../Services/tostify';
+import { errorToast, toastSuccess, toastWarn } from '../../Services/tostify';
 import _ from 'underscore' ;
+import { ColorRingLoading } from '../../Services/loading';
 
 const Settings = () => {
   const [alert, setAlert ] =useState('show');
@@ -14,7 +15,10 @@ const Settings = () => {
   const [ type, setType ] = useState("password");
   const [data, setData] = useState({email:"" ,password:""})
   const [flag , setFlag ] = useState(true)
+  const [loadButton , setLoadButton ] = useState(true);
   const initial = {email:"" ,password:""}
+  
+
   function AlertComp() {
       return <Alert variant="success"  onClose={() => setAlert('dont')} dismissible>
                 <Alert.Heading>Hey, nice to see you</Alert.Heading>
@@ -23,6 +27,7 @@ const Settings = () => {
                   </p>
             </Alert>
   }
+
   useEffect(()=>{
     if(flag){
        setFlag(false)
@@ -30,23 +35,35 @@ const Settings = () => {
         setAlert('dont')
         setData({email:res.data.email,password:res.data.password})
         
-      }).catch((err)=>console.log(err))
+      }).catch((err)=>{
+        if(err.code === 'ERR_NETWORK'){
+          console.log(err.code)
+          errorToast("Check your internet Connection")
+        }
+      })
     }
     },[])
 
   const handleSave = (e)=>{
+    setLoadButton(false)
     e.preventDefault()  
       settingsAxios({...data,user:localStorage.getItem("user")})
       .then((res)=>{
         if(res.data.message === 'created'){
+          setLoadButton(true)
           toastSuccess("Saved Successfully !")
         }else if(res.data.modifiedCount === 0){
+          setLoadButton(true)
           toastWarn("Change something before Update")
         }else if(res.data.message === 'updated'){
+          setLoadButton(true)
           toastSuccess("Updated Successfully !")
         }
       })
-      .catch((err)=>console.log(err))
+      .catch((err)=>{
+        setLoadButton(true)
+        console.log(err);
+      })
   }
 
   return (
@@ -98,7 +115,7 @@ const Settings = () => {
           <br/>
           <br/>
           <div className="d-flex">
-          <Button type="submit" style={{width:"100px"}} >{_.isEqual(initial , data)? "Save":"Update"}</Button>
+          <Button type="submit" style={{width:"100px"}} >{loadButton? _.isEqual(initial , data)? "Save":"Update" :<ColorRingLoading />}</Button>
           <Button type="button" className='ms-auto' onClick={()=> setModalShow(true)}>Tutorial</Button>
           <Modalcomp   show={modalShow}
                         onHide={() => setModalShow(false)} 

@@ -22,7 +22,11 @@ router.get('/getCredential',auth,express.json(),async function(request, response
     const user= request.header("user")
     const resData  = await getCredentialFromDB(user)
     console.log(resData);
-    response.send(resData)
+    if(resData === null){
+      response.status(404).send({message:"not-available"})
+    }else{
+      response.send(resData)
+    }
 })
 
 export default router

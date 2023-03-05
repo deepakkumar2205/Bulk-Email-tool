@@ -5,7 +5,7 @@ import Context from "../Context/Context";
 const ProtectedRoute = (props) => {
   let isLoggedin = localStorage.getItem("x-Auth-token");
   const contextData  = useContext(Context) ;
-  if (true) {
+  if (isLoggedin) {
     return props.children;
   } else {
     contextData.setNavFlag(false)

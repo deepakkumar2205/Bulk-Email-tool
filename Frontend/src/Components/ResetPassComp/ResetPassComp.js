@@ -1,11 +1,12 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { Circles, ColorRing } from "react-loader-spinner";
+import { ColorRing } from "react-loader-spinner";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import inv from '../../assets/404.svg';
 import { changePassAxios, checkString } from "../../Services/axios";
+import { CircularLoadingWithMultipleCircle } from "../../Services/loading";
 import { errorToast, toastSuccess } from "../../Services/tostify";
 
 const ResetPassComp = () => {
@@ -101,15 +102,7 @@ const ResetPassComp = () => {
       style={flag === 'changed' ? style2 : style1}
     >
      {flag ==='loading'?
-     <Circles
-     height="80"
-     width="80"
-     color="#4fa94d"
-     ariaLabel="circles-loading"
-     wrapperStyle={{}}
-     wrapperClass=""
-     visible={true}
-   />
+     <CircularLoadingWithMultipleCircle />
      :flag === 'invalid' ? <img src={inv} alt="" />:
      flag === 'changed' ? <div>
      <h3>Successfully Changed</h3>

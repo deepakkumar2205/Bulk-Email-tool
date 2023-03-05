@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { ColorRing } from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
 import { passResetAxios } from '../../Services/axios';
+import { ColorRingLoading } from '../../Services/loading';
 import { errorToast, toastSuccess } from '../../Services/tostify';
 
 const PasswordRes = () => {
@@ -12,7 +13,6 @@ const PasswordRes = () => {
   const handleSubmit = (e)=>{
     setStateButton(false)
     e.preventDefault()
-    console.log(change);
     passResetAxios({email:change})
     .then((res)=>{
       setStateButton(true)
@@ -38,15 +38,7 @@ const PasswordRes = () => {
         <div className="input-group mb-3">
           <input type="email" className="form-control" placeholder="Registered Email-id" aria-label="Recipient's username" value={change} onChange={(e)=>handleChange(e.target.value)} aria-describedby="button-addon2" required/>
           <button className="btn btn-outline-secondary" type="submit" id="button-addon2">{stateButton ? "Send" : 
-            <ColorRing
-            visible={true}
-            height="25"
-            width="40"
-            ariaLabel="blocks-loading"
-            wrapperStyle={{}}
-            wrapperClass="blocks-wrapper"
-            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-          />
+            <ColorRingLoading />
           }</button>
         </div>
         </form>
