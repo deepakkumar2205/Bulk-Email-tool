@@ -3,6 +3,8 @@ import Context from './Context'
 
 const Provider = (props) => {
     const [ navFlag ,setNavFlag ] = useState(false);
+    const [ composeRecepiantModal, setComposeRecepiantModal ] = useState(false) ;
+    const [ exampleModalOfExcel, setExampleModalOfExcel ] = useState(false) ;
 
     useEffect(()=>{
       if (localStorage.getItem("x-Auth-token")) {
@@ -13,7 +15,11 @@ const Provider = (props) => {
   return (
     <Context.Provider value={{
         navFlag,
-        setNavFlag
+        setNavFlag,
+        composeRecepiantModal,
+        setComposeRecepiantModal,
+        exampleModalOfExcel,
+        setExampleModalOfExcel
     }}>
         {props.children}
     </Context.Provider>

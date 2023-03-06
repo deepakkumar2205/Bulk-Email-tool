@@ -7,7 +7,7 @@ import './Settings.css'
 import { getCredential, settingsAxios } from '../../Services/axios';
 import { errorToast, toastSuccess, toastWarn } from '../../Services/tostify';
 import _ from 'underscore' ;
-import { ColorRingLoading } from '../../Services/loading';
+import { CircularLoadingWithMultipleCircle, ColorRingLoading } from '../../Services/loading';
 
 const Settings = () => {
   const [alert, setAlert ] =useState('show');
@@ -16,7 +16,9 @@ const Settings = () => {
   const [data, setData] = useState({email:"" ,password:""})
   const [flag , setFlag ] = useState(true)
   const [loadButton , setLoadButton ] = useState(true);
+  const [pageLoading, setPageLoading ] = useState(true) ;
   const initial = {email:"" ,password:""}
+
   
 
   function AlertComp() {
@@ -33,6 +35,7 @@ const Settings = () => {
        setFlag(false)
       getCredential().then((res)=>{
         setAlert('dont')
+        setPageLoading(false)
         setData({email:res.data.email,password:res.data.password})
         
       }).catch((err)=>{
@@ -68,69 +71,77 @@ const Settings = () => {
 
   return (
     <div className='d-flex justify-content-center flex-wrap' style={{width:'100%'}}>
+      {pageLoading?
+      <div className="d-flex justify-content-center align-items-center " style={{height:"80vh"}} >
+      <CircularLoadingWithMultipleCircle />
+      </div>
+      :
+      <>
       <dir>
-        <h3 className='text-start'>Settings</h3>
-        <hr />
-          <p className='text-start'>Set the user name and password credentials of the email on which you want to send the email.</p>
-        <br />
-        <div className='formStyle'>
-        <form style={{width:"500px"}} className="text-start " onSubmit={(e)=>handleSave(e)}>
-          {alert === 'show'&&<AlertComp />}
-        <Form.Label htmlFor="em" >Email id</Form.Label>
-          <Form.Control
-            type="email"
-            id="em"
-            aria-describedby="emailHelp"
-            placeholder=''
-            min={6}
-            value={data.email}
-            onChange={(e)=>setData({...data,[e.target.name]:e.target.value})}
-            name='email'
-            required
-          />
-          <Form.Text id="emailHelp" muted>
-            Enter your valid Email address above
-          </Form.Text>
-          <br/>
-          <br/>
-        <Form.Label htmlFor="inputPassword5">App Password</Form.Label>
-        <InputGroup className="mb-3">
-          <Form.Control
-            type={type}
-            id="inputPassword5"
-            value={data.password}
-            placeholder=""
-            name='password'
-            onChange={(e)=>setData({...data,[e.target.name]:e.target.value})}
-            aria-describedby="passwordHelpBlock"
-            required
-          />
-              <Button variant="outline-secondary" id="passwordHelpBlock" onClick={()=>type ==='password'?setType('text'):setType('password')}>
-                {type === 'password'? <AiFillEye />:<AiFillEyeInvisible />}
-              </Button>
-          </InputGroup>
-          <Form.Text id="passwordHelpBlock" muted>
-            Generate tha app password from <a href="https://myaccount.google.com/">https://myaccount.google.com</a> if your mail is G-mail and also complete <b>2-Step verification </b>. If you are using other email address do this on your concern e-mail website.
-          </Form.Text>
-          <br/>
-          <br/>
-          <div className="d-flex">
-          <Button type="submit" style={{width:"100px"}} >{loadButton? _.isEqual(initial , data)? "Save":"Update" :<ColorRingLoading />}</Button>
-          <Button type="button" className='ms-auto' onClick={()=> setModalShow(true)}>Tutorial</Button>
-          <Modalcomp   show={modalShow}
-                        onHide={() => setModalShow(false)} 
-              />
-          </div>
-          <br />
-        <h3 className='text-start'>Default Settings</h3>
-        <hr />
-          <p className='text-start'>If you didn't provide any credentials above.E-mail should be send from <b>mern.text.mail@gmail.com</b>.</p>
-        <br />
-        </form>
-       
+      <h3 className='text-start'>Settings</h3>
+      <hr />
+        <p className='text-start'>Set the user name and password credentials of the email on which you want to send the email.</p>
+      <br />
+      <div className='formStyle'>
+      <form style={{width:"500px"}} className="text-start " onSubmit={(e)=>handleSave(e)}>
+        {alert === 'show'&&<AlertComp />}
+      <Form.Label htmlFor="em" >Email id</Form.Label>
+        <Form.Control
+          type="email"
+          id="em"
+          aria-describedby="emailHelp"
+          placeholder=''
+          min={6}
+          value={data.email}
+          onChange={(e)=>setData({...data,[e.target.name]:e.target.value})}
+          name='email'
+          required
+        />
+        <Form.Text id="emailHelp" muted>
+          Enter your valid Email address above
+        </Form.Text>
+        <br/>
+        <br/>
+      <Form.Label htmlFor="inputPassword5">App Password</Form.Label>
+      <InputGroup className="mb-3">
+        <Form.Control
+          type={type}
+          id="inputPassword5"
+          value={data.password}
+          placeholder=""
+          name='password'
+          onChange={(e)=>setData({...data,[e.target.name]:e.target.value})}
+          aria-describedby="passwordHelpBlock"
+          required
+        />
+            <Button variant="outline-secondary" id="passwordHelpBlock" onClick={()=>type ==='password'?setType('text'):setType('password')}>
+              {type === 'password'? <AiFillEye />:<AiFillEyeInvisible />}
+            </Button>
+        </InputGroup>
+        <Form.Text id="passwordHelpBlock" muted>
+          Generate tha app password from <a href="https://myaccount.google.com/">https://myaccount.google.com</a> if your mail is G-mail and also complete <b>2-Step verification </b>. If you are using other email address do this on your concern e-mail website.
+        </Form.Text>
+        <br/>
+        <br/>
+        <div className="d-flex">
+        <Button type="submit" style={{width:"100px"}} >{loadButton? _.isEqual(initial , data)? "Save":"Update" :<ColorRingLoading />}</Button>
+        <Button type="button" className='ms-auto' onClick={()=> setModalShow(true)}>Tutorial</Button>
+        <Modalcomp   show={modalShow}
+                      onHide={() => setModalShow(false)} 
+            />
         </div>
-      </dir>
-      <img src={settingsImg} alt="" className="imgStyle"/>
+        <br />
+      <h3 className='text-start'>Default Settings</h3>
+      <hr />
+        <p className='text-start'>If you didn't provide any credentials above.E-mail should be send from <b>mern.text.mail@gmail.com</b>.</p>
+      <br />
+      </form>
+     
+      </div>
+    </dir>
+    <img src={settingsImg} alt="" className="imgStyle"/>
+    </>
+      }
     </div>
   )
 }

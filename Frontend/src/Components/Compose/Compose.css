@@ -1,0 +1,12 @@
+.ql-editor{
+    min-height: 300px ;
+}
+
+@media screen and (min-width:400px) {
+    .composestyle{
+        width: 100vw  ;
+    }
+}
+.composestyle{
+    width: 95vw  ;
+}

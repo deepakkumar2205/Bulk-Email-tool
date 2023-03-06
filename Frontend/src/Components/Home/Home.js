@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import homeImg from '../../assets/mailHome1.svg'
 import hi from '../../assets/waving-hi.gif'
 import { verifyTokenAxios } from '../../Services/axios'
 import { defaultToast, errorToast } from '../../Services/tostify'
