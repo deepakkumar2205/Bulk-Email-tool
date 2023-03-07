@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 
 const sendEmailBulk =async (email,subject,message,user,pass) =>{
+    try {
     const transporter = nodemailer.createTransport({
         host: process.env.HOST,
         service: process.env.SERVICE,
@@ -8,24 +9,20 @@ const sendEmailBulk =async (email,subject,message,user,pass) =>{
         secure: Boolean(process.env.SECURE),
         auth:{
             user:user,
-            pass:pass
+            pass: pass
         }
     })
     const info = await transporter.sendMail({
-        from : process.env.USER,
+        from : user,
         to:email,
         subject:subject,
-        // text:message,
-        html:message
+        html:message,
     });
-    console.log(message);
     return info
-    // try {
-    // console.log('email send successfully');
-    // } catch (error) {
-    //     console.log('email not send');
-    //     console.log(error);
-    // }
+    } catch (error){
+        console.log(error);
+        return error
+    }
 }
 
 export default sendEmailBulk ;

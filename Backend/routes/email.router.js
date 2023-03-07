@@ -22,7 +22,6 @@ router.post('/settings',auth,express.json(),async function(request, response){
 router.get('/getCredential',auth,express.json(),async function(request, response){
     const user= request.header("user")
     const resData  = await getCredentialFromDB(user)
-    console.log(resData);
     if(resData === null){
       response.status(404).send({message:"not-available"})
     }else{
@@ -33,9 +32,15 @@ router.get('/getCredential',auth,express.json(),async function(request, response
 router.post('/sendEmails',auth,express.json(),async function(request, response){
   const {emails ,subject , htmlTemplate} = request.body
     const user= request.header("user")
-    const {email , password} =  await getUserCredentialsFromDB(user)
-    const result =await sendEmailBulk(emails, subject , htmlTemplate , email , password);
-    response.send(result)
+    const cred =  await getUserCredentialsFromDB(user)
+    console.log(cred);
+    if(cred === null){
+      const result =await sendEmailBulk(emails, subject , htmlTemplate , process.env.USER , process.env.PASS);
+      response.send(result)
+    }else{
+      const result =await sendEmailBulk(emails, subject , htmlTemplate , cred.email , cred.password);
+      response.send(result)
+    }
 
 })
 

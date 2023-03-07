@@ -1,14 +1,20 @@
 import { useFormik } from "formik";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import Context from "../../Context/Context";
 import { sendEmailToRecepiantAxios } from "../../Services/axios";
+import { errorToast } from "../../Services/tostify";
 import { modules, formats } from "./QuilData";
 import PreviewEmailsModals from "./ViewEmailsModal";
+import { ColorRingLoading } from "../../Services/loading";
+import  { BsFillSendCheckFill } from 'react-icons/bs'
+import {  useNavigate } from "react-router-dom";
 
 export function ManualEmailCompose() {
+  const navigate = useNavigate();
 
+  const [enterFlag ,setEnterFlag] = useState(false)
   const contextData = useContext(Context);
 
   const init = {
@@ -30,12 +36,24 @@ export function ManualEmailCompose() {
   } = useFormik({
     initialValues: init,
     onSubmit: (values) => {
+      setEnterFlag(true)
       const { emails } = values ;
       const splitedData = emails.split(",");
 
       sendEmailToRecepiantAxios({...values , emails: splitedData})
-      .then((res)=>console.log(res))
-      .catch((err)=>console.log(err))
+      .then((res)=>{
+        console.log(res);
+        setEnterFlag(false)
+        if(res.data.code === 'EAUTH'){
+          errorToast("user name and password in settings are invalid")
+          navigate("/settings")
+        }
+      })
+      .catch((err)=>{
+        setEnterFlag(false)
+        console.log(err)
+      
+      })
     },
     validate: (values) => {
       let { emails, subject, htmlTemplate } = values;
@@ -57,6 +75,25 @@ export function ManualEmailCompose() {
     },
   });
 
+  //below funciton remove the duplicates from the string and it split the string into array using comma it separate the string.
+  function dataModal(val) {
+    let dataMod =val.replace(/ /g,'')
+    dataMod= dataMod.split(",") ;
+    let arr = []
+    for(let i=0;i<dataMod.length;i++){
+      if(arr.indexOf(dataMod[i]) === -1 ){
+        arr.push(dataMod[i])
+      }
+    }
+    let obj={ duplicates         :dataMod.length-arr.length,
+              withoutDuplicates  :arr.length,
+              total              :dataMod.length ,
+              data               :arr
+            }
+              
+    return obj ;
+  }
+  
 
   return (
     <div
@@ -66,7 +103,7 @@ export function ManualEmailCompose() {
       <div className="" style={{ width: "1000px", height: "600px" }}>
         <h1>compose</h1>
         <hr />
-        <PreviewEmailsModals recepaintInfo={values.emails.split(",")}/>
+        <PreviewEmailsModals recepaintInfo={dataModal(values.emails)}/>
         <form onSubmit={handleSubmit}>
         <Form.Group controlId="formField " className="mb-3">
           <Form.Label className="text-start w-100">
@@ -141,7 +178,7 @@ export function ManualEmailCompose() {
             </Form.Text>
           )}
           <br />
-          <Button type="submit">Send</Button>
+          <Button type="submit">{enterFlag ? <ColorRingLoading />:<>Send <BsFillSendCheckFill /></>}</Button>
           <br />
         </div>
           </form>

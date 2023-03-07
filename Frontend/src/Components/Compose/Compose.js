@@ -7,16 +7,19 @@ import { ExcelRenderer } from "react-excel-renderer";
 import ReactQuill from "react-quill";
 import Context from "../../Context/Context";
 import { sendEmailToRecepiantAxios } from "../../Services/axios";
+import { ColorRingLoading } from "../../Services/loading";
 import { errorToast } from "../../Services/tostify";
 import "./Compose.css";
 import ExcelExampleModal from "./ExampleModal";
 import { ManualEmailCompose } from "./ManualEmailCompose";
 import PreviewModal from "./Modal";
 import { formats, modules } from "./QuilData";
+import  { BsFillSendCheckFill } from 'react-icons/bs'
 
 const Compose = () => {
   const [recepaintInfo, setRecepaintInfo] = useState([]);
   const [radioValue, setRadioValue] = useState("manual");
+  const [enterFlag ,setEnterFlag] = useState(false)
   const contextData = useContext(Context);
 
   const radios = [
@@ -37,7 +40,7 @@ const Compose = () => {
             console.log(err);
           } else {
             setRecepaintInfo(res.rows);
-            const val = res.rows.map((e)=>e[0])
+            let val = res.rows.map((e)=>e[0])
             setFieldValue("emails",val)
           }
         });
@@ -62,11 +65,16 @@ const Compose = () => {
       initialValues: init,
       enableReinitialize:true,
       onSubmit: (values) => {
-        console.log(values);
-  
-        sendEmailToRecepiantAxios(values)
-        .then((res)=>console.log(res))
-        .catch((err)=>console.log(err))
+        setEnterFlag(true)
+        sendEmailToRecepiantAxios({...values,emails: dataModal(values.emails).data})
+        .then((res)=>{
+          setEnterFlag(false)
+          console.log(res)
+        })
+        .catch((err)=>{
+          setEnterFlag(false)
+          console.log(err)
+        })
       },
       validate:(values)=>{
         let {emails ,subject ,htmlTemplate } = values ;
@@ -90,7 +98,25 @@ const Compose = () => {
       resetForm()
       setRecepaintInfo([])
     },[radioValue])
- 
+
+  
+  //below funciton remove the duplicates from the string and it split the string into array using comma it separate the string.
+  function dataModal(val) {
+    let arr = []
+    for(let i=0;i<val.length;i++){
+      const spaceRemovedEmail = val[i].replace(/ /g,'');
+      if(arr.indexOf(spaceRemovedEmail) === -1 ){
+        arr.push(spaceRemovedEmail) 
+      }
+    }
+    let obj={ duplicates         :val.length-arr.length,
+              withoutDuplicates  :arr.length,
+              total              :val.length ,
+              data               :arr
+            }
+              
+    return obj ;
+  }
 
   return (
     <>
@@ -121,7 +147,7 @@ const Compose = () => {
           style={{ height: "65vh" }}
         >
           {/* //! modal comp below */}
-          <PreviewModal recepaintInfo={recepaintInfo} />
+          <PreviewModal recepaintInfo={dataModal(values.emails)} />
           <ExcelExampleModal />
           <div className="" style={{ width: "1000px", height: "600px" }}>
             <h1>compose</h1>
@@ -226,7 +252,7 @@ const Compose = () => {
                   {errors.htmlTemplate}
                 </Form.Text>  }
                 <br />
-                <Button type="submit">Send</Button>
+                <Button type="submit">{enterFlag ? <ColorRingLoading />:<>Send <BsFillSendCheckFill /></>}</Button>
                 <br />
               </div>
               <br />

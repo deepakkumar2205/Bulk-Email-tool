@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Context from '../../Context/Context';
 
-function PreviewModal({recepaintInfo}) {
+function PreviewModal(props) {
   const contextData = useContext(Context);
   const handleClose = () =>contextData.setComposeRecepiantModal(false);
   return (
@@ -19,9 +19,12 @@ function PreviewModal({recepaintInfo}) {
           <Modal.Title>Preview of Recepiants</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <h5>Total Email's : {recepaintInfo.length}</h5>
+            <h5>Total Email's : {props.recepaintInfo.total}</h5>
+            <h5>Duplicates : {props.recepaintInfo.duplicates}</h5>
+            <h5>Without Duplicates : {props.recepaintInfo.withoutDuplicates}</h5>
+            <hr />
           <ol>
-            {recepaintInfo.map((email,inx)=>{
+            {props.recepaintInfo.data.map((email,inx)=>{
                 return <li key={`${inx}`}>{email}</li>
             })}
           </ol>

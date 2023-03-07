@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Context from '../../Context/Context';
 
-function PreviewEmailsModals({recepaintInfo}) {
+function PreviewEmailsModals(props) {
   const contextData = useContext(Context);
 
   const handleClose = () => contextData.setPreviewModal(false);
@@ -17,12 +17,15 @@ function PreviewEmailsModals({recepaintInfo}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
+          <Modal.Title>Preview of Recepiants</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <h5>Total Email's : {recepaintInfo.length}</h5>
+            <h5>Total Email's : {props.recepaintInfo.total}</h5>
+            <h5>Duplicates : {props.recepaintInfo.duplicates}</h5>
+            <h5>Without Duplicates : {props.recepaintInfo.withoutDuplicates}</h5>
+            <hr />
           <ol>
-            {recepaintInfo.map((email,inx)=>{
+            {props.recepaintInfo.data.map((email,inx)=>{
                 return <li key={`${inx}`}>{email}</li>
             })}
           </ol>
