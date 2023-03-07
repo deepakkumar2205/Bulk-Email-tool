@@ -4,7 +4,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import Context from "../../Context/Context";
 import { sendEmailToRecepiantAxios } from "../../Services/axios";
-import { errorToast } from "../../Services/tostify";
+import { errorToast, toastSuccess } from "../../Services/tostify";
 import { modules, formats } from "./QuilData";
 import PreviewEmailsModals from "./ViewEmailsModal";
 import { ColorRingLoading } from "../../Services/loading";
@@ -22,6 +22,8 @@ export function ManualEmailCompose() {
     subject: "",
     htmlTemplate: "",
   };
+  
+
 
   const {
     values,
@@ -36,17 +38,20 @@ export function ManualEmailCompose() {
   } = useFormik({
     initialValues: init,
     onSubmit: (values) => {
+      console.log(values);
       setEnterFlag(true)
       const { emails } = values ;
       const splitedData = emails.split(",");
 
       sendEmailToRecepiantAxios({...values , emails: splitedData})
       .then((res)=>{
-        console.log(res);
+        
         setEnterFlag(false)
         if(res.data.code === 'EAUTH'){
           errorToast("user name and password in settings are invalid")
           navigate("/settings")
+        }else if(res.data.envelopeTime){
+          toastSuccess(`E_Mail__Sent_Count   : ${res.data.accepted.length}   E_Mail_Reject_Count :  ${res.data.rejected.length}`)
         }
       })
       .catch((err)=>{
