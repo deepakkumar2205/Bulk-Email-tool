@@ -24,3 +24,7 @@ export async function updateData(data) {
 export async function getCredentialFromDB(data) {
     return await client.db(dataBaseName).collection("mail-credentials").findOne({user:data});
 }
+
+export async function getUserCredentialsFromDB(user){
+    return await client.db(dataBaseName).collection("mail-credentials").findOne({user:user})
+}

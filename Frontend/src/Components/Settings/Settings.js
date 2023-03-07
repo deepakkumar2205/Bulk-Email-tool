@@ -14,12 +14,14 @@ const Settings = () => {
   const [modalShow, setModalShow] = useState(false);
   const [ type, setType ] = useState("password");
   const [data, setData] = useState({email:"" ,password:""})
+  //flag is for initial loading the page
   const [flag , setFlag ] = useState(true)
+  //set flag 2 for save and updata button 
+  const [flag1 , setFlag1 ] = useState(true)
   const [loadButton , setLoadButton ] = useState(true);
   const [pageLoading, setPageLoading ] = useState(true) ;
-  const initial = {email:"" ,password:""}
 
-  
+  // gtugkvshdapobjjn
 
   function AlertComp() {
       return <Alert variant="success"  onClose={() => setAlert('dont')} dismissible>
@@ -40,8 +42,10 @@ const Settings = () => {
         
       }).catch((err)=>{
         if(err.code === 'ERR_NETWORK'){
-          console.log(err.code)
           errorToast("Check your internet Connection")
+        }else if(err.code === 'ERR_BAD_REQUEST'){
+          setPageLoading(false)
+          setFlag1(false)
         }
       })
     }
@@ -124,7 +128,7 @@ const Settings = () => {
         <br/>
         <br/>
         <div className="d-flex">
-        <Button type="submit" style={{width:"100px"}} >{loadButton? _.isEqual(initial , data)? "Save":"Update" :<ColorRingLoading />}</Button>
+        <Button type="submit" style={{width:"100px"}} >{loadButton? !flag1? "Save":"Update" :<ColorRingLoading />}</Button>
         <Button type="button" className='ms-auto' onClick={()=> setModalShow(true)}>Tutorial</Button>
         <Modalcomp   show={modalShow}
                       onHide={() => setModalShow(false)} 

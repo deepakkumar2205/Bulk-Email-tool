@@ -79,3 +79,15 @@ export const getCredential =  ()=>{
       }
       })
 }
+
+export const sendEmailToRecepiantAxios =  (data)=>{
+  return axios({
+        url:`${API}/email/sendEmails`,
+        method:"post",
+        headers:{
+          "x-auth-token":localStorage.getItem("x-Auth-token"),
+          'user':localStorage.getItem("user")
+      },
+      data:data
+      })
+}
