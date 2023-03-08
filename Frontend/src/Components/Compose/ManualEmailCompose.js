@@ -22,8 +22,6 @@ export function ManualEmailCompose() {
     subject: "",
     htmlTemplate: "",
   };
-  
-
 
   const {
     values,
@@ -38,20 +36,27 @@ export function ManualEmailCompose() {
   } = useFormik({
     initialValues: init,
     onSubmit: (values) => {
-      console.log(values);
       setEnterFlag(true)
       const { emails } = values ;
       const splitedData = emails.split(",");
+      let arr = []
+      for(let i=0;i<splitedData.length;i++){
+        if(arr.indexOf(splitedData[i]) === -1 && splitedData[i].match( /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) ){
+          arr.push(splitedData[i])
+        }
+      }
 
-      sendEmailToRecepiantAxios({...values , emails: splitedData})
+      sendEmailToRecepiantAxios({...values , emails: arr})
       .then((res)=>{
-        
+        console.log(res);
         setEnterFlag(false)
         if(res.data.code === 'EAUTH'){
           errorToast("user name and password in settings are invalid")
           navigate("/settings")
         }else if(res.data.envelopeTime){
           toastSuccess(`E_Mail__Sent_Count   : ${res.data.accepted.length}   E_Mail_Reject_Count :  ${res.data.rejected.length}`)
+        }else if(res.data.code === 'EENVELOPE'){
+          errorToast("Enter the valid Recepiants")
         }
       })
       .catch((err)=>{
@@ -86,7 +91,7 @@ export function ManualEmailCompose() {
     dataMod= dataMod.split(",") ;
     let arr = []
     for(let i=0;i<dataMod.length;i++){
-      if(arr.indexOf(dataMod[i]) === -1 ){
+      if(arr.indexOf(dataMod[i]) === -1 && dataMod[i].match( /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) ){
         arr.push(dataMod[i])
       }
     }

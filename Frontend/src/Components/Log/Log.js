@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
-import Nav from 'react-bootstrap/Nav';
+import Context from '../../Context/Context';
+import { getLogDetails } from '../../Services/axios';
+import './Log.css'
+import TableComp from './Table';
 
 const Log = () => {
-  return (
-    <Container className='m-4'>
+  const contextData = useContext(Context) ;
 
-    <Nav fill variant="pills" defaultActiveKey="/home">
-      <Nav.Item>
-        <Nav.Link eventKey="link-1">Manual</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey="link-2">Large File Upload Mail</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-      </Nav.Item>
-    </Nav>
-    </Container>
+
+  useEffect(()=>{
+      getLogDetails()
+      .then((res)=>{
+        console.log(res.data)
+        contextData.setLogData(res.data)
+      })
+      .catch((err)=>console.log(err))
+  },[])
+  return (
+    <div  className=' logStyle d-flex justify-content-center m-4' >
+        <div className='w-100 tableComp' >
+            <TableComp data={"sd"}/>
+        </div>
+    </div>
     )
 }
 

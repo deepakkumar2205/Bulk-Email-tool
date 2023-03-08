@@ -102,3 +102,14 @@ export const deleteCredentials =  ()=>{
       }
       })
 }
+
+export const getLogDetails =  ()=>{
+  return axios({
+        url:`${API}/email/getLogDetailsData`,
+        method:"get",
+        headers:{
+          "x-auth-token":localStorage.getItem("x-Auth-token"),
+          'user':localStorage.getItem("user")
+      }
+      })
+}

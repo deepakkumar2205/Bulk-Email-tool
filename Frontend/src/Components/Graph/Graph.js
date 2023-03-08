@@ -1,8 +1,11 @@
 import React from 'react'
+import ChartComp from './Chart'
 
 const Graph = () => {
   return (
-    <div>Graph</div>
+    <div>
+      <ChartComp />
+    </div>
   )
 }
 

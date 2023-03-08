@@ -8,19 +8,21 @@ import ReactQuill from "react-quill";
 import Context from "../../Context/Context";
 import { sendEmailToRecepiantAxios } from "../../Services/axios";
 import { ColorRingLoading } from "../../Services/loading";
-import { errorToast } from "../../Services/tostify";
+import { errorToast, toastSuccess } from "../../Services/tostify";
 import "./Compose.css";
 import ExcelExampleModal from "./ExampleModal";
 import { ManualEmailCompose } from "./ManualEmailCompose";
 import PreviewModal from "./Modal";
 import { formats, modules } from "./QuilData";
 import  { BsFillSendCheckFill } from 'react-icons/bs'
+import {  useNavigate } from "react-router-dom";
 
 const Compose = () => {
   const [recepaintInfo, setRecepaintInfo] = useState([]);
   const [radioValue, setRadioValue] = useState("manual");
   const [enterFlag ,setEnterFlag] = useState(false)
-  const contextData = useContext(Context);
+  const contextData = useContext(Context); 
+  const navigate = useNavigate();
 
   const radios = [
     { name: "Manual send", value: "manual" },
@@ -69,7 +71,14 @@ const Compose = () => {
         sendEmailToRecepiantAxios({...values,emails: dataModal(values.emails).data})
         .then((res)=>{
           setEnterFlag(false)
-          console.log(res)
+          if(res.data.code === 'EAUTH'){
+            errorToast("user name and password in settings are invalid")
+            navigate("/settings")
+          }else if(res.data.envelopeTime){
+            toastSuccess(`E_Mail__Sent_Count   : ${res.data.accepted.length}   E_Mail_Reject_Count :  ${res.data.rejected.length}`)
+          }else if(res.data.code === 'EENVELOPE'){
+            errorToast("Enter the valid Recepiants")
+          }
         })
         .catch((err)=>{
           setEnterFlag(false)
@@ -105,7 +114,7 @@ const Compose = () => {
     let arr = []
     for(let i=0;i<val.length;i++){
       const spaceRemovedEmail = val[i].replace(/ /g,'');
-      if(arr.indexOf(spaceRemovedEmail) === -1 ){
+      if(arr.indexOf(spaceRemovedEmail) === -1  && spaceRemovedEmail.match( /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) ){
         arr.push(spaceRemovedEmail) 
       }
     }

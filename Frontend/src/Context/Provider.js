@@ -6,6 +6,7 @@ const Provider = (props) => {
     const [ composeRecepiantModal, setComposeRecepiantModal ] = useState(false) ;
     const [ exampleModalOfExcel, setExampleModalOfExcel ] = useState(false) ;
     const [ previewModal, setPreviewModal ] = useState(false) ;
+    const [ logData, setLogData ] = useState([]);
 
     useEffect(()=>{
       if (localStorage.getItem("x-Auth-token")) {
@@ -22,7 +23,9 @@ const Provider = (props) => {
         exampleModalOfExcel,
         setExampleModalOfExcel,
         previewModal ,
-        setPreviewModal
+        setPreviewModal,
+        logData,
+        setLogData
     }}>
         {props.children}
     </Context.Provider>

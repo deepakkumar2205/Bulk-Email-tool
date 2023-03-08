@@ -1,0 +1,16 @@
+.logStyle{
+    /* background-color: blue; */
+}
+
+.tableComp {
+  overflow-x: scroll;
+  border: 1px solid black;
+  height: auto;
+}
+
+@media screen and (min-width:900px) {
+    .logStyle{
+        margin: 200px;
+        /* background-color: blue; */
+    }
+}
