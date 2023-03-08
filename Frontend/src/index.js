@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-quill/dist/quill.snow.css';
 import { ToastContainer } from 'react-toastify';
+import 'react-tooltip/dist/react-tooltip.css';
 import Provider from './Context/Provider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

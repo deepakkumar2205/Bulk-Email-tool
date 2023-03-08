@@ -91,3 +91,14 @@ export const sendEmailToRecepiantAxios =  (data)=>{
       data:data
       })
 }
+
+export const deleteCredentials =  ()=>{
+  return axios({
+        url:`${API}/email/deleteCred`,
+        method:"delete",
+        headers:{
+          "x-auth-token":localStorage.getItem("x-Auth-token"),
+          'user':localStorage.getItem("user")
+      }
+      })
+}
