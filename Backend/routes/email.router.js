@@ -1,6 +1,15 @@
 import express from 'express';
 import { auth } from '../middleware/auth.js';
-import { createUserCredential, findDataOfEmailCredential, getCredentialFromDB, getUserCredentialsFromDB, updateData } from '../services/emai.service.js';
+import {
+  createUserCredential,
+  delCredentialsFromDB,
+  findDataOfEmailCredential,
+  getCredentialFromDB,
+  getLogDetailsFromDB,
+  getUserCredentialsFromDB,
+  saveLogDataInDB,
+  updateData,
+} from "../services/emai.service.js";
 import sendEmailBulk from '../utils/BulkEmail.js';
 const router = express.Router();
 
@@ -35,13 +44,52 @@ router.post('/sendEmails',auth,express.json(),async function(request, response){
     const cred =  await getUserCredentialsFromDB(user)
     console.log(cred);
     if(cred === null){
-      const result =await sendEmailBulk(emails, subject , htmlTemplate , process.env.USER , process.env.PASS);
-      response.send(result)
+      let userEmailDef = process.env.USER
+      let passDef = process.env.PASS
+      const result =await sendEmailBulk(emails, subject , htmlTemplate , userEmailDef , passDef );
+      const log = {
+        user: user,
+        from : userEmailDef,
+        to : emails,
+        subject: subject,
+        htmlTemplate,htmlTemplate,
+        accepted:result.accepted,
+        rejected:result.rejected,
+        time: new Date()
+      }
+      const logRes = await saveLogDataInDB(log)
+      
+      response.send({...result,log:logRes})
     }else{
       const result =await sendEmailBulk(emails, subject , htmlTemplate , cred.email , cred.password);
-      response.send(result)
+      const log = {
+        user: user,
+        from : cred.email,
+        to : emails,
+        subject: subject,
+        htmlTemplate,htmlTemplate,
+        accepted:result.accepted,
+        rejected:result.rejected,
+        time: new Date()
+        
+      }
+      const logRes = await saveLogDataInDB(log)
+
+      response.send({...result,log:logRes})
     }
 
+})
+
+router.delete('/deleteCred',auth,express.json(),async function(request, response){
+    const user= request.header("user")
+    const cred =  await delCredentialsFromDB(user)
+      response.send(cred)
+})
+
+router.get('/getLogDetailsData',auth,express.json(),async function(request, response){
+    const user= request.header("user")
+    const result =  await getLogDetailsFromDB(user)
+      response.send(result)
 })
 
 export default router

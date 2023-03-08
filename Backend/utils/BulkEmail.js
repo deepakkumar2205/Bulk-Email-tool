@@ -20,7 +20,6 @@ const sendEmailBulk =async (email,subject,message,user,pass) =>{
     });
     return info
     } catch (error){
-        console.log(error);
         return error
     }
 }

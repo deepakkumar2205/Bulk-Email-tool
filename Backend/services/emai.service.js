@@ -28,3 +28,15 @@ export async function getCredentialFromDB(data) {
 export async function getUserCredentialsFromDB(user){
     return await client.db(dataBaseName).collection("mail-credentials").findOne({user:user})
 }
+
+export async function delCredentialsFromDB(user){
+    return await client.db(dataBaseName).collection("mail-credentials").deleteOne({user:user})
+}
+
+export async function saveLogDataInDB(data){
+    return await client.db(dataBaseName).collection("logCollect").insertOne(data)
+}
+
+export async function getLogDetailsFromDB(data){
+    return await client.db(dataBaseName).collection("logCollect").find({user:data}).toArray()
+}
