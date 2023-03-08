@@ -15,9 +15,9 @@ const Log = () => {
       .catch((err)=>console.log(err))
   },[])
   return (
-    <div  className=' logStyle d-flex justify-content-center m-4 ' >
+    <div  className=' logStyle d-flex justify-content-center mt-4 container-md' >
         <div className='tableComp ' >
-            <TableComp data={"sd"}/>
+            <TableComp />
            {contextData.logData.length === 0 &&  <div className="imgStyleLog">
               <img className='imgTag' src="https://www.eduplusnow.com/assets/social-img/No-Data-Found-Image.png" alt="No Date Found!" />
             </div>}

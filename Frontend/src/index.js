@@ -2,13 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
-import 'react-quill/dist/quill.snow.css';
 import { ToastContainer } from 'react-toastify';
-import 'react-tooltip/dist/react-tooltip.css';
 import Provider from './Context/Provider';
+// pootstrap css
+import 'bootstrap/dist/css/bootstrap.min.css';
+//react quill css
+import 'react-quill/dist/quill.snow.css';
+// toast css 
+import 'react-toastify/dist/ReactToastify.css';
+// react-tooltip css
+import 'react-tooltip/dist/react-tooltip.css';
+// dataPicker css
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

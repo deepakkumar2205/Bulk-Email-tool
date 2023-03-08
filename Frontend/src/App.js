@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Compose from "./Components/Compose/Compose";
 import Emailverify from "./Components/Emailverify/Emailverify";
-import Graph from "./Components/Graph/Graph";
+import GraphComp from "./Components/Graph/GraphComp";
 import Home from "./Components/Home/Home";
 import Log from "./Components/Log/Log";
 import Login from "./Components/Login/Login";
@@ -30,7 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/compose"        element={<ProtectedRoute><Compose />    </ProtectedRoute>} />
-        <Route path="/graph"          element={<ProtectedRoute><Graph />      </ProtectedRoute>} />
+        <Route path="/graph"          element={<ProtectedRoute><GraphComp />      </ProtectedRoute>} />
         <Route path="/log"            element={<ProtectedRoute><Log />        </ProtectedRoute>} />
         <Route path="/settings"       element={<ProtectedRoute><Settings />   </ProtectedRoute>} />
         <Route path="/login"          element={<Login />} />
