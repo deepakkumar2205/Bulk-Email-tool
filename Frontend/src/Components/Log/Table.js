@@ -23,7 +23,7 @@ function TableComp() {
       </thead>
       <tbody>
         {contextData.logData.map((data,inx)=>{
-            return <tr>
+            return <tr key={`${inx}`}>
                     <td>{inx+1}</td>
                     <td>{new Date(data.time).toDateString()}</td>
                     <td>{new Date(data.time).toLocaleTimeString()}</td>

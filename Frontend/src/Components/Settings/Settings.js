@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Button, Form, InputGroup, Modal } from "react-bootstrap";
-import settingsImg from "../../assets/settings.gif";
-import Modalcomp from "./ModalComp.js";
+import { Alert, Button, Form, InputGroup } from "react-bootstrap";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import "./Settings.css";
-import { deleteCredentials, getCredential, settingsAxios } from "../../Services/axios";
-import { errorToast, toastSuccess, toastWarn } from "../../Services/tostify";
-import _ from "underscore";
-import {
-  CircularLoadingWithMultipleCircle,
-  ColorRingLoading,
-} from "../../Services/loading";
 import { MdDeleteOutline } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
+import settingsImg from "../../assets/settings.gif";
+import { deleteCredentials, getCredential, settingsAxios } from "../../Services/axios";
+import {
+  CircularLoadingWithMultipleCircle,
+  ColorRingLoading
+} from "../../Services/loading";
+import { errorToast, toastSuccess, toastWarn } from "../../Services/tostify";
+import Modalcomp from "./ModalComp.js";
+import "./Settings.css";
 
 const Settings = () => {
   const [alert, setAlert] = useState("show");
@@ -58,7 +57,6 @@ const Settings = () => {
         });
     }
   }, []);
-// ccdkxctvcbhnaqmm
   // To save and update the credentials in database
   const handleSave = (e) => {
     setLoadButton(false);
@@ -183,6 +181,7 @@ const Settings = () => {
                   <a
                     href="https://myaccount.google.com/"
                     data-bs-toogle="tooltip"
+                    rel="noreferrer"
                     title="If you have google account click here to generate passwork in google "
                     target='_blank'
                   >

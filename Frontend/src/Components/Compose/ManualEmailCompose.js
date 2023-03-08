@@ -1,15 +1,15 @@
 import { useFormik } from "formik";
 import React, { useContext, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
+import { BsFillSendCheckFill } from 'react-icons/bs';
 import ReactQuill from "react-quill";
+import { useNavigate } from "react-router-dom";
 import Context from "../../Context/Context";
 import { sendEmailToRecepiantAxios } from "../../Services/axios";
-import { errorToast, toastSuccess } from "../../Services/tostify";
-import { modules, formats } from "./QuilData";
-import PreviewEmailsModals from "./ViewEmailsModal";
 import { ColorRingLoading } from "../../Services/loading";
-import  { BsFillSendCheckFill } from 'react-icons/bs'
-import {  useNavigate } from "react-router-dom";
+import { errorToast, toastSuccess } from "../../Services/tostify";
+import { formats, modules } from "./QuilData";
+import PreviewEmailsModals from "./ViewEmailsModal";
 
 export function ManualEmailCompose() {
   const navigate = useNavigate();
@@ -29,7 +29,6 @@ export function ManualEmailCompose() {
     setFieldTouched,
     errors,
     setFieldValue,
-    resetForm,
     handleBlur,
     touched,
     handleSubmit,
@@ -108,7 +107,7 @@ export function ManualEmailCompose() {
   return (
     <div
       className="d-flex justify-content-center align-items-center m-4 composestyle"
-      style={{ height: "65vh" }}
+      
     >
       <div className="" style={{ width: "1000px", height: "600px" }}>
         <h1>compose</h1>

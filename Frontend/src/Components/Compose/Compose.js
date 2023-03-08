@@ -128,8 +128,8 @@ const Compose = () => {
   }
 
   return (
-    <>
-      <div className="d-flex m-4" style={{ width: "95vw" }}>
+    <div className="d-flex justify-content-center align-items-center flex-column ">
+      <div className="d-flex m-4 ms-5 container-lg " style={{ width: "100%" }}>
         <ButtonGroup>
           {radios.map((radio, idx) => (
             <ToggleButton
@@ -153,7 +153,7 @@ const Compose = () => {
       ) : (
         <div
           className="d-flex justify-content-center align-items-center m-4 composestyle"
-          style={{ height: "65vh" }}
+          style={{ minHeight: "65vh" }}
         >
           {/* //! modal comp below */}
           <PreviewModal recepaintInfo={dataModal(values.emails)} />
@@ -161,7 +161,7 @@ const Compose = () => {
           <div className="" style={{ width: "1000px", height: "600px" }}>
             <h1>compose</h1>
             <hr />
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
               <Form.Group controlId="formFileLg " className="mb-3">
                 <Form.Label className="text-start w-100">
                   Enter Email{" "}
@@ -269,7 +269,7 @@ const Compose = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
