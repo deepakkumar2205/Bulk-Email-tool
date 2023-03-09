@@ -74,7 +74,7 @@ function ChartComp(props) {
 
     return (
       <>
-        {props.graphType !== 'donut'? <div className="app w-100">
+        {props.graphType !== 'donut'? <div className="app w-100" >
           <div className="row">
             <div className="mixed-chart">
               <Chart
@@ -82,6 +82,7 @@ function ChartComp(props) {
                 series={options.series}
                 type={props.graphType !== 'donut'? props.graphType : 'line'}
                 width="100%"
+                height={window.innerHeight <= 642 ?'500':''}
               />
             </div>
           </div>

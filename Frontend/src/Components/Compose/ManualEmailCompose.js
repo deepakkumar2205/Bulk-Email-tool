@@ -37,7 +37,7 @@ export function ManualEmailCompose() {
     onSubmit: (values) => {
       setEnterFlag(true)
       const { emails } = values ;
-      const splitedData = emails.split(",");
+      let splitedData = emails.split(",").map((e)=>e.replace(/ /g,''));
       let arr = []
       for(let i=0;i<splitedData.length;i++){
         if(arr.indexOf(splitedData[i]) === -1 && splitedData[i].match( /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) ){
@@ -47,7 +47,6 @@ export function ManualEmailCompose() {
 
       sendEmailToRecepiantAxios({...values , emails: arr})
       .then((res)=>{
-        console.log(res);
         setEnterFlag(false)
         if(res.data.code === 'EAUTH'){
           errorToast("user name and password in settings are invalid")

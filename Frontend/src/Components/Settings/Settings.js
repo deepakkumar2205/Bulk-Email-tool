@@ -86,7 +86,6 @@ const Settings = () => {
   function delCredentials() {
     deleteCredentials()
     .then((res)=>{
-      console.log(res)
       if(res.data.deletedCount ===1 ){
         toastSuccess("Credentials Removed Successfully")
         setData({ email: "", password: "" })
@@ -177,7 +176,7 @@ const Settings = () => {
                   </Button>
                 </InputGroup>
                 <Form.Text id="passwordHelpBlock" muted>
-                  Generate tha app password from{" "}
+                  Generate tha app password from
                   <a
                     href="https://myaccount.google.com/"
                     data-bs-toogle="tooltip"
@@ -186,8 +185,8 @@ const Settings = () => {
                     target='_blank'
                   >
                     https://myaccount.google.com
-                  </a>{" "}
-                  if your mail is G-mail and also complete{" "}
+                  </a>
+                  if your mail is G-mail and also complete
                   <b>2-Step verification </b>. If you are using other email
                   address do this on your concern e-mail website.
                 </Form.Text>
