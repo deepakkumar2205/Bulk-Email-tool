@@ -113,3 +113,15 @@ export const getLogDetails =  ()=>{
       }
       })
 }
+
+export const graphDataAxios = (data) =>{
+  return axios({
+      url:`${API}/email/getGraphData`,
+      method:"post",
+      headers:{
+        "x-auth-token":localStorage.getItem("x-Auth-token"),
+        'user':localStorage.getItem("user")
+      },
+      data:data 
+  })
+}

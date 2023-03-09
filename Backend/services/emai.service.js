@@ -1,6 +1,4 @@
 import { client } from '../index.js';
-import bcrypt from 'bcrypt';
-import { ObjectId } from 'mongodb';
 
 // Data base name declared below :
 const dataBaseName = 'Bulk-Email-Sender'
@@ -39,4 +37,8 @@ export async function saveLogDataInDB(data){
 
 export async function getLogDetailsFromDB(data){
     return await client.db(dataBaseName).collection("logCollect").find({user:data}).toArray()
+}
+
+export async function getDataFromDBofRange(user,start,end){
+    return await client.db(dataBaseName).collection("logCollect").find({user:user,time:{$gt:new Date(start),$lt:new Date(end)}},{projection:{time:1,accepted:1}}).toArray()
 }

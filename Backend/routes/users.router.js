@@ -1,21 +1,20 @@
-import express from 'express';
 import bcrypt from 'bcrypt';
-import {
-  createUser,
-  generateHashedPassword,
-  getUsers,
-  addToken,
-  getDataFromSessionCollection,
-  updateVerification,
-  checkString,
-  changePasswordInDB,
-  deleteOneString,
-  getProfilePic
-} from "../services/user.service.js";
-import randomstring from 'randomstring';
+import express from 'express';
 import jwt from 'jsonwebtoken';
-import {auth} from '../middleware/auth.js'
-import sendEmail from '../utils/sendEmail.js';
+import randomstring from 'randomstring';
+import { auth } from '../middleware/auth.js';
+import {
+  addToken,
+  changePasswordInDB,
+  checkString,
+  createUser,
+  deleteOneString,
+  generateHashedPassword,
+  getDataFromSessionCollection,
+  getUsers,
+  updateVerification,
+} from "../services/user.service.js";
+import sendEmail from "../utils/sendEmail.js";
 const router = express.Router();
 
 //!below api is foront end api to use to send mail.

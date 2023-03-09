@@ -5,6 +5,7 @@ import {
   delCredentialsFromDB,
   findDataOfEmailCredential,
   getCredentialFromDB,
+  getDataFromDBofRange,
   getLogDetailsFromDB,
   getUserCredentialsFromDB,
   saveLogDataInDB,
@@ -14,7 +15,7 @@ import sendEmailBulk from '../utils/BulkEmail.js';
 const router = express.Router();
 
 //!below api is foront end api to use to send mail.
-const API = "https://localhost:3000";
+const API = "https://bulk-emailtool.netlify.app";
 
 router.post('/settings',auth,express.json(),async function(request, response){
     const { email, password, user  } = request.body;
@@ -90,6 +91,19 @@ router.get('/getLogDetailsData',auth,express.json(),async function(request, resp
     const user= request.header("user")
     const result =  await getLogDetailsFromDB(user)
       response.send(result)
+})
+
+router.post('/getGraphData', auth, express.json(),async function(request, response) {
+  const user = request.header("user")
+  const {startDate , endDate} = request.body ;
+  const resData = await getDataFromDBofRange(user,startDate,endDate);
+  const array= [];
+  resData.forEach(e=>array.push({
+    time:e.time,
+    mailCount:e.accepted.length
+  }))
+  
+  response.send({message:"working",data:array})
 })
 
 export default router
