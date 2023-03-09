@@ -1,0 +1,21 @@
+
+
+@media screen and (max-width:500px) {
+    .pickerStyle{
+        width: fit-content !important;
+        background-color: blue;
+        color: blue;
+    }
+}
+
+.pickerStyle{
+    min-width: 620px;
+    width: 50%;
+}
+
+.dropDownStyle{
+    min-width: 30vw;
+    max-width:max-content;
+    object-fit: contain;
+}
+
