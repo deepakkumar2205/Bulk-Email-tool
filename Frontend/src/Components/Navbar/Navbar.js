@@ -22,8 +22,8 @@ function NavComp() {
     <>
       <Navbar bg="dark" variant="dark">
         <Container className="">
-          <Navbar.Brand onClick={() => navigate("/")} className="">
-            <img src={logo} alt="" className="imageStyle" />
+          <Navbar.Brand onClick={() => navigate("/")} className="overflow-auto">
+            <img src={logo} alt="" className="imageStyle " />
             <b>Bulk Email Tool</b>
           </Navbar.Brand>
           {contextData.navFlag ? (

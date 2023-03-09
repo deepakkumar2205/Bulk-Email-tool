@@ -1,7 +1,7 @@
 .tableComp {
   overflow-x: scroll;
   height: auto;
-  
+  width: 100%;
 }
 
 @media screen and (min-width:900px) {
@@ -13,6 +13,12 @@
 @media screen and (min-width:576px) {
     .logStyle{
         margin: 0 px !important;
+    }
+}
+
+@media screen and (max-width:576px) {
+    .tableComp{
+        width: 140vw;
     }
 }
 

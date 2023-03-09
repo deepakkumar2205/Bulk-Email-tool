@@ -15,7 +15,7 @@ const Log = () => {
       .catch((err)=>console.log(err))
   },[])
   return (
-    <div  className=' logStyle d-flex justify-content-center mt-4 container-md' >
+    <div  className=' logStyle container-md' >
         <div className='tableComp ' >
             <TableComp />
            {contextData.logData.length === 0 &&  <div className="imgStyleLog">

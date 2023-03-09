@@ -17,7 +17,7 @@ const DatePicker = () => {
   return (
     <div>
         <DateRangePicker
-         onChange={item => setState([item.selection])}
+        onChange={item => setState([item.selection])}
         months={1}
         minDate={addDays(new Date(), -300)}
         maxDate={addDays(new Date(), 900)}
