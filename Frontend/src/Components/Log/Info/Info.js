@@ -16,7 +16,7 @@ const Info = () => {
   return (
     <div className='container mt-5'>
         <div className="mb-3">
-            <Button className='btn btn-secondary' onClick={()=>navigate(-1)}>back</Button>
+            <Button className='btn btn-secondary' onClick={()=>navigate(-1)}>Back</Button>
         </div>
         <div className=''>
             <h3>Information:</h3>

@@ -125,3 +125,14 @@ export const graphDataAxios = (data) =>{
       data:data 
   })
 }
+
+export const getMailsCountAxios =  ()=>{
+  return axios({
+        url:`${API}/email/getMailSendToday`,
+        method:"get",
+        headers:{
+          "x-auth-token":localStorage.getItem("x-Auth-token"),
+          'user':localStorage.getItem("user")
+      }
+      })
+}

@@ -7,7 +7,9 @@ import {
   getCredentialFromDB,
   getDataFromDBofRange,
   getLogDetailsFromDB,
+  getMailSentInfoFromDb,
   getUserCredentialsFromDB,
+  getUserNamefromDb,
   saveLogDataInDB,
   updateData,
 } from "../services/emai.service.js";
@@ -37,6 +39,17 @@ router.get('/getCredential',auth,express.json(),async function(request, response
     }else{
       response.send(resData)
     }
+})
+
+router.get('/getMailSendToday',auth,express.json(),async function(request, response){
+    const user= request.header("user")
+    const start = new Date( new Date().toDateString())
+    const end   = new Date(new Date(start).setDate(new Date().getDate()+1))
+    const resData  = await getMailSentInfoFromDb(user,start,end)
+    const getName = await getUserNamefromDb(user);
+    let count = 0 ;
+    resData.forEach((e)=>count+=e.accepted.length)
+    response.send({count:count,name:getName.userName})
 })
 
 router.post('/sendEmails',auth,express.json(),async function(request, response){

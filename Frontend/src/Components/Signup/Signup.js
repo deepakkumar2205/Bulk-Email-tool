@@ -46,7 +46,7 @@ const Signup = () => {
         singUpAxios(values).then((res)=>{
           console.log(res)
           if(res.status === 200){
-            toastSuccess("SignUp Successfully created ")
+            toastSuccess("SignUp Successfull ")
             defaultToast("Check your Email and Verify your token and then login")
             navigate("/login")
         setButtonLoader(true)

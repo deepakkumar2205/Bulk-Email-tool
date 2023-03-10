@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { client } from '../index.js';
 
 // Data base name declared below :
@@ -41,4 +42,11 @@ export async function getLogDetailsFromDB(data){
 
 export async function getDataFromDBofRange(user,start,end){
     return await client.db(dataBaseName).collection("logCollect").find({user:user,time:{$gt:new Date(start),$lt:new Date(end)}},{projection:{time:1,accepted:1}}).toArray()
+}
+
+export async function getMailSentInfoFromDb(user,start,end){
+    return await client.db(dataBaseName).collection("logCollect").find({user:user,time:{$gt:new Date(start),$lt:new Date(end)}},{projection:{time:1,accepted:1}}).toArray()
+}
+export async function getUserNamefromDb(user){
+    return await client.db(dataBaseName).collection("users").findOne({_id:new ObjectId(user)},{projection:{userName:1}})
 }

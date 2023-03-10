@@ -18,7 +18,7 @@ export function ManualEmailCompose({reUse}) {
   
   let init = {
     emails: "",
-    subject: "sdf",
+    subject: "",
     htmlTemplate: "",
   };
 

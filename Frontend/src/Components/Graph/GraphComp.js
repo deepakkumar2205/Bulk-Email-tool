@@ -15,9 +15,9 @@ const GraphComp = () => {
         <br />
       </div>
     <div className='dropDownStyle' >
-      <div>
-    <Form.Label>Select Graph Type</Form.Label>
-      <select className="form-select" aria-label="Default select example" onChange={(e)=>setToggleChart(e.target.value)}>
+      <div >
+      <Form.Label>Select Graph Type</Form.Label>
+      <select className="form-select w-100" aria-label="Default select example" onChange={(e)=>setToggleChart(e.target.value)}>
         <option value="line" defaultChecked>Line</option>
         <option value="bar">Bar</option>
         <option value="donut">Donut</option>
