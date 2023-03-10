@@ -15,7 +15,7 @@ import { ManualEmailCompose } from "./ManualEmailCompose";
 import PreviewModal from "./Modal";
 import { formats, modules } from "./QuilData";
 import  { BsFillSendCheckFill } from 'react-icons/bs'
-import {  useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 
 const Compose = () => {
   const [recepaintInfo, setRecepaintInfo] = useState([]);
@@ -23,6 +23,7 @@ const Compose = () => {
   const [enterFlag ,setEnterFlag] = useState(false)
   const contextData = useContext(Context); 
   const navigate = useNavigate();
+  const da = useLocation();
 
   const radios = [
     { name: "Manual send", value: "manual" },
@@ -149,7 +150,7 @@ const Compose = () => {
       </div>
       {/*//! mail part start from here */}
       {radioValue === "manual" ? (
-        <ManualEmailCompose />
+        <ManualEmailCompose  reUse={da.state}/>
       ) : (
         <div
           className="d-flex justify-content-center align-items-center m-4 composestyle"

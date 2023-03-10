@@ -1,10 +1,12 @@
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
+import { useNavigate } from 'react-router-dom';
 import Context from '../../Context/Context';
 
 function TableComp() {
     const contextData = useContext(Context) ;
+    const navigate = useNavigate();
 
   return (
     <Table striped className='text-start ' style={{overflowX:"auto"}}>
@@ -32,7 +34,7 @@ function TableComp() {
                     <td>{data.accepted.length}</td>
                     <td>{data.rejected.length}</td>
                     <td>{data.subject}</td>
-                    <td><Button size='sm '>info</Button></td>
+                    <td><Button size='sm' onClick={()=> navigate('/login/info',{state:data})}>info</Button></td>
                 </tr>
         })}
        

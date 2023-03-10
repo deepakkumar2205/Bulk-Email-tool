@@ -11,17 +11,21 @@ import { errorToast, toastSuccess } from "../../Services/tostify";
 import { formats, modules } from "./QuilData";
 import PreviewEmailsModals from "./ViewEmailsModal";
 
-export function ManualEmailCompose() {
+export function ManualEmailCompose({reUse}) {
   const navigate = useNavigate();
-
   const [enterFlag ,setEnterFlag] = useState(false)
   const contextData = useContext(Context);
-
-  const init = {
+  
+  let init = {
     emails: "",
-    subject: "",
+    subject: "sdf",
     htmlTemplate: "",
   };
+
+  // this will update the initial value when you navigate from info page
+  if(reUse !== null){
+    init = reUse
+  }
 
   const {
     values,
@@ -150,6 +154,7 @@ export function ManualEmailCompose() {
             placeholder="" 
             onChange={handleChange}
             onBlur={handleBlur}
+            value={values.subject}
             name='subject'
             isInvalid={errors.subject && touched.subject}
           />
@@ -166,6 +171,7 @@ export function ManualEmailCompose() {
             theme="snow"
             modules={modules}
             formats={formats}
+            value={values.htmlTemplate}
             placeholder="Type your Content to send"
             className={`${errors.htmlTemplate && touched.htmlTemplate ?"border border-danger":""}`}
             onChange={(e,a,b,c)=>{

@@ -25,7 +25,7 @@ const Log = () => {
   return (
     <div  className=' logStyle container-md' >
       {loading?
-      <div className='d-flex align-items-Center w-100 justify-content-center mt-5'>
+      <div className='d-flex align-items-center w-100 justify-content-center' style={{height:"80vh"}}>
         <CircularLoadingWithMultipleCircle />
       </div>
       :

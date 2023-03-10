@@ -18,7 +18,6 @@ const GraphComp = () => {
       <div>
     <Form.Label>Select Graph Type</Form.Label>
       <select className="form-select" aria-label="Default select example" onChange={(e)=>setToggleChart(e.target.value)}>
-        {/* <option selected>Select Graph</option> */}
         <option value="line" defaultChecked>Line</option>
         <option value="bar">Bar</option>
         <option value="donut">Donut</option>
