@@ -82,7 +82,7 @@ function ChartComp(props) {
                 series={options.series}
                 type={props.graphType !== 'donut'? props.graphType : 'line'}
                 width="100%"
-                height={window.innerHeight <= 642 ?'500':''}
+                height={window.innerHeight <= 700 ?'500':''}
               />
             </div>
           </div>

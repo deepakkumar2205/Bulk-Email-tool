@@ -18,7 +18,7 @@ import sendEmail from "../utils/sendEmail.js";
 const router = express.Router();
 
 //!below api is foront end api to use to send mail.
-const API = "https://localhost:3000";
+const API = "https://bulk-emailtool.netlify.app";
 
 router.post('/signup',express.json(),async function(request, response){
     const { email, emailVerified, password, userName } = request.body;
@@ -81,7 +81,7 @@ router.post('/resetpassword',express.json(),async function(request, response){
       });
       
       const mail =await sendEmail(data.email,"Reset Password" , `${API}/pas-reset-completion/${randString}`)  
-      response.status(200).send({message:'successfull'})
+      response.status(200).send({message:'successfull',mail:mail})
     }else{
       response.status(401).send({message:'invalid credentials'})
     }

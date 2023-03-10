@@ -12,7 +12,7 @@ const sendEmail =async (email,subject,text) =>{
                 pass:process.env.PASS
             }
         })
-        await transporter.sendMail({
+        const info= await transporter.sendMail({
             from : process.env.USER,
             to:email,
             subject:subject,
@@ -30,10 +30,10 @@ const sendEmail =async (email,subject,text) =>{
             </div>
         </div>
             `
-        },(err,info)=>console.log(err || info));
-        console.log('email send successfully');
+        });
+        return info
     } catch (error) {
-        console.log('email not send');
+        return error
     }
 }
 
