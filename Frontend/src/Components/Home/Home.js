@@ -16,7 +16,7 @@ const Home = () => {
       verifyTokenAxios()
       .then((res)=>{
         if(res.status === 200){
-          defaultToast("Welcome")
+          // defaultToast("Welcome")
           setFlag(false)
         }
       })
@@ -35,10 +35,6 @@ const Home = () => {
     getMailsCountAxios()
     .then((res)=>setCount(res.data))
     .catch((err)=>console.log(err))
-
-    // getQuoteAxios()
-    // .then((res)=>setCount(res.data))
-    // .catch((err)=>console.log(err))
 
     fetch('https://dummyjson.com/quotes/random')
     .then(res => res.json())

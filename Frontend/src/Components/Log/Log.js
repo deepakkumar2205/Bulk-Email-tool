@@ -17,7 +17,10 @@ const Log = () => {
         contextData.setLogData(res.data)
       })
       .catch((err)=>{
-        console.log(err)
+        console.log(err.code)
+        if(err.code === "ERR_NETWORK"){
+          errorToast("Network Error")
+        }
         setLoading(false)
         errorToast('Error')
       })

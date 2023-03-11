@@ -87,12 +87,12 @@ function ChartComp(props) {
             </div>
           </div>
         </div> : 
-         <div className="donut m-5">
+         <div className="donut m-5 w-100">
          <Chart
            options={donutData.options}
            series={donutData.series}
            type="donut"
-           width="680"
+           width="100%"
            height='500'
          />
        </div>
