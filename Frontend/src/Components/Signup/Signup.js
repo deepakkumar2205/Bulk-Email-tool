@@ -66,8 +66,8 @@ const Signup = () => {
   return (
     <div>
       <div
-        className="d-flex text-start justify-content-center align-items-center"
-        style={{ width: "100%", height: "90vh" }}
+        className="d-flex text-start justify-content-center align-items-center m-2"
+        style={{ width: "100vw", height: "90vh" }}
       >
         <form className="" style={{ width: "300px" }} onSubmit={handleSubmit}>
           <div className="mb-3">

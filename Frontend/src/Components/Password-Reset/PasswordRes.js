@@ -30,7 +30,7 @@ const PasswordRes = () => {
     })
   }
   return (
-    <div className='d-flex justify-content-center align-items-center' style={{height:"80vh"}}>
+    <div className='d-flex justify-content-center align-items-center m-2 p-2' style={{height:"80vh"}}>
       <div>
       <h4 className='text-start'>Password Reset Form :</h4>
       <hr/>
