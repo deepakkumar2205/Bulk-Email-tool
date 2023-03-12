@@ -85,10 +85,12 @@ const ResetPassComp = () => {
  
     //some style part here
     const style1 ={
-      height:"80vh"
+      height:"80vh",
+      width:"100vw",
     }
     const style2 ={
       height:"80vh",
+      width:"100vw",
       backgroundImage:"Url(https://cdn.dribbble.com/users/2121936/screenshots/4814257/media/3b45e4716422617a03088177f448e158.gif)",
       backgroundPosition:"center",
       backgroundRepeat:"no-repeat" 
@@ -98,19 +100,19 @@ const ResetPassComp = () => {
 */
   return (
     <div
-      className="d-flex justify-content-center align-items-center"
+      className="d-flex justify-content-center align-items-center p-2"
       style={flag === 'changed' ? style2 : style1}
     >
      {flag ==='loading'?
      <CircularLoadingWithMultipleCircle />
-     :flag === 'invalid' ? <img src={inv} alt="" />:
+     :flag === 'invalid' ? <img src={inv} alt="" style={{width:"100vw"}}/>:
      flag === 'changed' ? <div>
      <h3>Successfully Changed</h3>
      <h3>Login Page In</h3>
      <h4>{count}</h4>
   </div>
      :
-     <div className="text-start" style={{ width: "300px" }}>
+     <div className="text-start " style={{ width: "300px" }}>
      <h3 className="text-start">Change Password</h3>
      <hr />
      <div>
