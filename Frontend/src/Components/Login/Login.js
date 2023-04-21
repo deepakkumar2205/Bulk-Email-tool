@@ -6,7 +6,7 @@ import login from "../../assets/login.png";
 import Context from "../../Context/Context";
 import { loginAxios } from "../../Services/axios";
 import { ColorRingLoading } from "../../Services/loading";
-import { errorToast, toastSuccess } from "../../Services/tostify";
+import { errorToast, toastSuccess, toastWarn } from "../../Services/tostify";
 
 const Login = () => {
   const [showPass, setShowPass] = useState("password");
@@ -52,6 +52,8 @@ const Login = () => {
           setButtonStatus(true)
           if(err.response.status === 401){
             errorToast("Invalid Credentials")
+          }else if(err.response.status === 406){
+            toastWarn("Check your mail and click the verification link then try again")
           }
         })
       },

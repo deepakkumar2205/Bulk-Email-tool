@@ -157,7 +157,7 @@ router.post('/login',express.json(),async function(request, response){
         DateTime: new Date()
       });
       const mail =await sendEmail(email,"verification token" , `${API}/emailverify/${token}`)  
-      response.status(405).send({message:"Invalid credentials"})
+      response.status(406).send({message:"verification pending"})
     }
   }
 })

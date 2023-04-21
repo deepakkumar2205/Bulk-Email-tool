@@ -1,6 +1,7 @@
 {
   "name": "Bulk_Email_Tool",
   "version": "0.1.0",
+  "author": "Deepakkumar",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
