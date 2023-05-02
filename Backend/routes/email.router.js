@@ -56,7 +56,6 @@ router.post('/sendEmails',auth,express.json(),async function(request, response){
   const {emails ,subject , htmlTemplate} = request.body
     const user= request.header("user")
     const cred =  await getUserCredentialsFromDB(user)
-    console.log(cred);
     if(cred === null){
       let userEmailDef = process.env.USER
       let passDef = process.env.PASS
@@ -67,8 +66,8 @@ router.post('/sendEmails',auth,express.json(),async function(request, response){
         to : emails,
         subject: subject,
         htmlTemplate,htmlTemplate,
-        accepted:result.accepted,
-        rejected:result.rejected,
+        accepted:result.accepted == null?[]:result.accepted,
+        rejected:result.rejected == null?[]:result.rejected,
         time: new Date()
       }
       const logRes = await saveLogDataInDB(log)
@@ -82,8 +81,8 @@ router.post('/sendEmails',auth,express.json(),async function(request, response){
         to : emails,
         subject: subject,
         htmlTemplate,htmlTemplate,
-        accepted:result.accepted,
-        rejected:result.rejected,
+        accepted:result.accepted == null?[]:result.accepted,
+        rejected:result.rejected == null?[]:result.rejected,
         time: new Date()
         
       }
